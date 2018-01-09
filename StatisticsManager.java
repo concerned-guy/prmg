@@ -66,7 +66,7 @@ public class StatisticsManager {
 	numWEOProjects = getStream().filter(project -> project.getDepartment().equals("WEO")).count();
 	numMSTProjects = getStream().filter(project -> project.getDepartment().equals("MST")).count();
 	numFSTProjects = getStream().filter(project -> project.getDepartment().equals("FST")).count();
-	numAverageProjects = getStream().count() / 6.0;
+	numAverageProjects = getStream().count() / 8.0;
 	totalBudget = getStream().mapToInt(project -> project.getBudget()).sum();
 	totalIncome = getStream().mapToInt(project -> project.getIncome()).sum();
 	totalProfit = totalIncome - totalBudget;
