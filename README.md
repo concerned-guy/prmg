@@ -1,7 +1,13 @@
 # Project Management Pro Limited Edition Deluxe v0.99
-Helps you manage projects.
+Helps you manage projects: people, time, income and expense.
 
 Credits: *Team 1337*
+- Duong Quoc Tue
+- Nguyen Hieu Thao
+- Vuong Bao Son
+- Do Thai Son
+- Nguyen Bao Lam
+- Nguyen Van Hoang Long
 
 # Compile
 ```bash
