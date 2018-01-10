@@ -41,59 +41,59 @@ public class StatisticsManager {
     public double averageProgress;
 
     public StatisticsManager(ProjectManager projectManager) {
-	this.projectManager = projectManager;
-	this.projects = projectManager.getProjects();
-	this.people = new HashSet<String>();
+        this.projectManager = projectManager;
+        this.projects = projectManager.getProjects();
+        this.people = new HashSet<String>();
     }
 
     private Stream<Project> getStream() {
-	return this.projects.stream();
+        return this.projects.stream();
     }
 
     public void update() {
-	this.people.clear();
-	getStream().forEach(project -> this.people.addAll(Arrays.asList(project.getTeamMembers())));
+        this.people.clear();
+        getStream().forEach(project -> this.people.addAll(Arrays.asList(project.getTeamMembers())));
 
-	numProjects = getStream().count();
-	numFinishedProjects = getStream().filter(project -> project.getProgress() == 100).count();
-	numOngoingProjects = getStream().filter(project -> project.getStartDate().isBefore(LocalDate.now()) && project.getProgress() != 100).count();
-	numFutureProjects = getStream().filter(project -> project.getStartDate().isAfter(LocalDate.now())).count();
-	numPMABProjects = getStream().filter(project -> project.getDepartment().equals("PMAB")).count();
-	numAMSNProjects = getStream().filter(project -> project.getDepartment().equals("AMSN")).count();
-	numENProjects = getStream().filter(project -> project.getDepartment().equals("EN")).count();
-	numSAProjects = getStream().filter(project -> project.getDepartment().equals("SA")).count();
-	numICTProjects = getStream().filter(project -> project.getDepartment().equals("ICT")).count();
-	numWEOProjects = getStream().filter(project -> project.getDepartment().equals("WEO")).count();
-	numMSTProjects = getStream().filter(project -> project.getDepartment().equals("MST")).count();
-	numFSTProjects = getStream().filter(project -> project.getDepartment().equals("FST")).count();
-	numAverageProjects = getStream().count() / 8.0;
-	totalBudget = getStream().mapToInt(project -> project.getBudget()).sum();
-	totalIncome = getStream().mapToInt(project -> project.getIncome()).sum();
-	totalProfit = totalIncome - totalBudget;
-	averageBudget = getStream().mapToInt(project -> project.getBudget()).average().orElse(0.0);
-	averageIncome = getStream().mapToInt(project -> project.getIncome()).average().orElse(0.0);
-	averageProfit = averageIncome - averageBudget;
-	oldestProject = getStream().map(project -> project.getStartDate())
-	    .filter(date -> date.isBefore(LocalDate.now()))
-	    .sorted((d1, d2) -> d1.isAfter(d2) ? 1 : -1)
-	    .findFirst().orElse(null);
-	newestProject = getStream().map(project -> project.getStartDate())
-	    .filter(date -> date.isBefore(LocalDate.now()))
-	    .sorted((d1, d2) -> d2.isAfter(d1) ? 1 : -1)
-	    .findFirst().orElse(null);
-	longestProjectNow = getStream().filter(project -> project.getStartDate().isBefore(LocalDate.now()))
-	    .map(project -> project.getEndDateApprox().toEpochDay() - LocalDate.now().toEpochDay())
-	    .sorted((a, b) -> (int) (b - a))
-	    .findFirst().orElse(0L);
-	longestProjectOverall = getStream()
-	    .map(project -> project.getEndDateApprox().toEpochDay() - LocalDate.now().toEpochDay())
-	    .sorted((a, b) -> (int) (b - a))
-	    .findFirst().orElse(0L);
-	numPeople = (long) this.people.size();
-	numMostPeople = getStream().map(project -> project.getNumMembers())
-	    .sorted((a, b) -> b - a)
-	    .findFirst().orElse(0);
-	numAveragePeople = getStream().mapToInt(project -> project.getNumMembers()).average().orElse(0.0);
-	averageProgress = getStream().mapToInt(project -> project.getProgress()).average().orElse(0.0);
+        numProjects = getStream().count();
+        numFinishedProjects = getStream().filter(project -> project.getProgress() == 100).count();
+        numOngoingProjects = getStream().filter(project -> project.getStartDate().isBefore(LocalDate.now()) && project.getProgress() != 100).count();
+        numFutureProjects = getStream().filter(project -> project.getStartDate().isAfter(LocalDate.now())).count();
+        numPMABProjects = getStream().filter(project -> project.getDepartment().equals("PMAB")).count();
+        numAMSNProjects = getStream().filter(project -> project.getDepartment().equals("AMSN")).count();
+        numENProjects = getStream().filter(project -> project.getDepartment().equals("EN")).count();
+        numSAProjects = getStream().filter(project -> project.getDepartment().equals("SA")).count();
+        numICTProjects = getStream().filter(project -> project.getDepartment().equals("ICT")).count();
+        numWEOProjects = getStream().filter(project -> project.getDepartment().equals("WEO")).count();
+        numMSTProjects = getStream().filter(project -> project.getDepartment().equals("MST")).count();
+        numFSTProjects = getStream().filter(project -> project.getDepartment().equals("FST")).count();
+        numAverageProjects = getStream().count() / 8.0;
+        totalBudget = getStream().mapToInt(project -> project.getBudget()).sum();
+        totalIncome = getStream().mapToInt(project -> project.getIncome()).sum();
+        totalProfit = totalIncome - totalBudget;
+        averageBudget = getStream().mapToInt(project -> project.getBudget()).average().orElse(0.0);
+        averageIncome = getStream().mapToInt(project -> project.getIncome()).average().orElse(0.0);
+        averageProfit = averageIncome - averageBudget;
+        oldestProject = getStream().map(project -> project.getStartDate())
+            .filter(date -> date.isBefore(LocalDate.now()))
+            .sorted((d1, d2) -> d1.isAfter(d2) ? 1 : -1)
+            .findFirst().orElse(null);
+        newestProject = getStream().map(project -> project.getStartDate())
+            .filter(date -> date.isBefore(LocalDate.now()))
+            .sorted((d1, d2) -> d2.isAfter(d1) ? 1 : -1)
+            .findFirst().orElse(null);
+        longestProjectNow = getStream().filter(project -> project.getStartDate().isBefore(LocalDate.now()))
+            .map(project -> project.getEndDateApprox().toEpochDay() - LocalDate.now().toEpochDay())
+            .sorted((a, b) -> (int) (b - a))
+            .findFirst().orElse(0L);
+        longestProjectOverall = getStream()
+            .map(project -> project.getEndDateApprox().toEpochDay() - LocalDate.now().toEpochDay())
+            .sorted((a, b) -> (int) (b - a))
+            .findFirst().orElse(0L);
+        numPeople = (long) this.people.size();
+        numMostPeople = getStream().map(project -> project.getNumMembers())
+            .sorted((a, b) -> b - a)
+            .findFirst().orElse(0);
+        numAveragePeople = getStream().mapToInt(project -> project.getNumMembers()).average().orElse(0.0);
+        averageProgress = getStream().mapToInt(project -> project.getProgress()).average().orElse(0.0);
     }
 }
